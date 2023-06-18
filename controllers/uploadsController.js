@@ -7,6 +7,7 @@ const uploadProductImage = async (req, res) => {
     __dirname,
     '../public/uploaded_images/' + `${productImage.name}`
   );
+  console.log('The image path is ', imagePath);
   // move the uploaded product image to the the folder we want on the server
   await productImage.mv(imagePath);
   res
