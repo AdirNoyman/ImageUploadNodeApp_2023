@@ -1,8 +1,28 @@
 const path = require('path');
 const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
 
 const uploadProductImage = async (req, res) => {
+  // check if file exists
+  console.log('Req files: ', req.files);
+  if (!req.files) {
+    throw new CustomError.BadRequestError('No file uploaded 🤨');
+  }
+
   const productImage = req.files.image;
+
+  // check file format (by mimetype)
+  if (!productImage.mimetype.startsWith('image/')) {
+    throw new CustomError.BadRequestError('Invalid file format 🤨');
+  }
+
+  // check file size(in bytes)
+  const productAllowedSize = 1024 * 1024;
+
+  if (productImage.size > productAllowedSize) {
+    throw new CustomError.BadRequestError('File size too big 🤨');
+  }
+
   const imagePath = path.join(
     __dirname,
     '../public/uploaded_images/' + `${productImage.name}`
