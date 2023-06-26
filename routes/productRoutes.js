@@ -4,9 +4,11 @@ const {
   createProduct,
   getAllProducts,
 } = require('../controllers/productController');
-const { uploadProductImage } = require('../controllers/uploadsController');
+const {
+  uploadProductImageToCloud,
+} = require('../controllers/uploadsController');
 
 router.route('/').post(createProduct).get(getAllProducts);
-router.route('/uploads').post(uploadProductImage);
+router.route('/uploads').post(uploadProductImageToCloud);
 
 module.exports = router;

@@ -8,7 +8,7 @@ const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.CLOUD_API_SECRET,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
 
 // database
@@ -25,7 +25,7 @@ app.use(express.static('./public'));
 // load the request body from the request object
 app.use(express.json());
 // load the file sent in the request object
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
 
 app.get('/', (req, res) => {
   res.send('<h1>File Upload Starter</h1>');
